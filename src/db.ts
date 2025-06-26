@@ -1,21 +1,13 @@
-import { strict } from "assert";
-import mongoose, { model, mongo, Schema } from "mongoose";
-import { title } from "process";
-import { string } from "zod";
+import mongoose, { Schema, model } from "mongoose";
+import { MONGO_URL } from "./config";  
 
-
-// connection to mongoose section
-// direct MongoDB Atlas connection string (URL encoded @ = %40)
-mongoose.connect("mongodb+srv://nilesh:nilesh%408055@cluster0.ud7rwoi.mongodb.net/Brainly?retryWrites=true&w=majority")
+// Connect to MongoDB
+mongoose.connect(MONGO_URL)
   .then(() => console.log("✅ Connected to MongoDB Atlas"))
   .catch((err) => console.error("❌ DB connection error:", err.message));
 
 
-
-
-
-// the schema and model section
-// schema and model for the user
+// User Schema
 const UserSchema = new Schema({
   username: { type: String, unique: true },
   password: { type: String },
@@ -23,15 +15,11 @@ const UserSchema = new Schema({
 export const UserModel = model("User", UserSchema);
 
 
-
-
-
-//schema and model for the content
+// Content Schema
 const ContentSchema = new Schema({
-  title: { type: String},
+  title: { type: String },
   link: { type: String },
-  tags :[{type : mongoose.Types.ObjectId, ref: 'Tag'}], // need to understand tags's inputs(PENDING.....)
-  userId :{type :mongoose.Types.ObjectId , ref: 'User', required : true}
+  tags: [{ type: mongoose.Types.ObjectId, ref: 'Tag' }],
+  userId: { type: mongoose.Types.ObjectId, ref: 'User', required: true }
 });
 export const ContentModel = model("Content", ContentSchema);
-

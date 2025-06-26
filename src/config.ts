@@ -1,2 +1,6 @@
-export const JWT_Password = "fihq8f3h";
-export const db_link = "nilesh:nilesh%408055@cluster0.ud7rwoi.mongodb.net/Brainly?retryWrites=true&w=majority";
+// src/config.ts or wherever you like
+import dotenv from "dotenv";
+dotenv.config();  // loads .env variables into process.env
+
+export const MONGO_URL = process.env.MONGO_URL || "";
+export const JWT_Password = process.env.JWT_SECRET || "fallback_secret";
